@@ -1,0 +1,28 @@
+CC=gcc
+CFLAGS=-std=c11 -g -Wall -Werror -Wconversion
+LDLIBS=-lm
+OUTPUT=game
+
+all: $(OUTPUT)
+
+$(OUTPUT): k.o main.o ui.o hof.o
+	cppcheck --enable=performance,unusedFunction --error-exitcode=1 *.c
+	$(CC) $(CFLAGS) k.o main.o ui.o hof.o $(LDLIBS) -o $(OUTPUT)
+
+main.o: main.c
+	$(CC) $(CFLAGS) -c main.c $(LDLIBS) -o main.o
+
+k.o: k.c k.h
+	$(CC) $(CFLAGS) -c k.c $(LDLIBS) -o k.o
+
+hof.o: hof.c hof.h
+	$(CC) $(CFLAGS) -c hof.c $(LDLIBS) -o hof.o
+
+ui.o: ui.c ui.h
+	$(CC) $(CFLAGS) -c ui.c $(LDLIBS) -o ui.o
+
+clean: 
+	rm -rf $(OUTPUT) *.o
+
+valgrind: all
+	valgrind --leak-check=full --show-reachable=yes --track-origins=yes ./$(OUTPUT)

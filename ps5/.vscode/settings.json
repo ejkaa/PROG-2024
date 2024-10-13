@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "stdlib.h": "c",
+        "type_traits": "c",
+        "stdio.h": "c",
+        "room.h": "c",
+        "game.h": "c"
+    }
+}

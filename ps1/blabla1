@@ -1,0 +1,14 @@
+CC=gcc
+CFLAGS=-std=c11 -Wall -Werror
+LDLIBS=-lm
+OUTPUT=ps1
+SOURCES=main.c playfair.c bmp.c
+
+all: codeanalysis ps1
+
+codeanalysis: $(SOURCES)
+	cppcheck --error-exitcode=1 $^
+
+$(OUTPUT):
+	echo "Running compilation..."
+	$(CC) $(CFLAGS) *c $(LDLIBS) -o $(OUTPUT)
